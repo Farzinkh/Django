@@ -56,7 +56,7 @@ ROOT_URLCONF = 'server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/project/Django/server/templates'],
+        'DIRS': ['C:/Users/farzin/Documents/GitHub/Django/server/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

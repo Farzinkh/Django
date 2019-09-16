@@ -6,23 +6,31 @@ from django.http import JsonResponse
 from delta.models import status,led
 from django.db import connection
 def show(request,f):
-    response={
-    'abas':f,
-    'state':'on',
-    }
-    return JsonResponse(response)
-def function2(request,dade):
-    if request.method=="POST":
+    obj= status.objects.get(id=5)
+    obj.moisture=f
+    obj.save()
+    obj2=led.objects.get(id=1)
+    if request.method =='POST':
         response={
-        'view':request.method,
-        'state':request.POST,
+        'method':request.method,
+        'moisture':f,
+        'state':obj2.order
         }
         return JsonResponse(response)
-    else:
+    elif request.method =='GET':
         response={
-        'state':"notdefine"
+        'method':request.method,
+        'moisture':f,
+        'state':obj2.order
         }
         return JsonResponse(response)
+    return HttpResponse("the name is {}".format(f))
+
+##    response={
+##    'abas':f,
+##    'state':'on',
+##    }
+    ##return JsonResponse(response)
     ##if request.headers['connection'] =='close':
         ##connection.close()
 def function(request):
@@ -37,7 +45,7 @@ def off(request):
     obj= led.objects.get(id=1)
     obj.order='off'
     obj.position='off'
-    obj.save()
+    obj.save( )
 #    post=led.objects.create(order='off',position='off')
 #    post.save()
     content={
@@ -55,7 +63,6 @@ def on(request):
     'position': obj.position
     }
     return render(request,'base.html',content)
-    #return HttpResponse("the name is {}".format(state))
 def homepage(request):
 #    person= {'firstname': 'farzin', 'lastname': 'Daniels'}
 #    weather= "sunny"
@@ -63,4 +70,4 @@ def homepage(request):
 #        'person': person,
 #        'weather': weather,
 #        }
-    return render(request,'show.html')
+    return render(request,'base.html')
