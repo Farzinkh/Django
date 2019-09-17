@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^delta/', include(led_resource.urls)),
     path('function/',views.function, name="function"),
     path('delta/tele/led/<str:f>/',views.show),
+    path('node/led/',views.node , name="node"),
     path('',views.homepage),
     path('on/',views.on, name="on"),
     path('off/',views.off, name="off")

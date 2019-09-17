@@ -5,22 +5,27 @@ import json
 from django.http import JsonResponse
 from delta.models import status,led
 from django.db import connection
+def node(request):
+    response={'moisture':678
+    }
+    return JsonResponse(response)
 def show(request,f):
     obj= status.objects.get(id=5)
     obj.moisture=f
     obj.save()
     obj2=led.objects.get(id=1)
+    m=json.loads(f)
     if request.method =='POST':
         response={
         'method':request.method,
-        'moisture':f,
+        'moisture':m["moisture"],
         'state':obj2.order
         }
         return JsonResponse(response)
     elif request.method =='GET':
         response={
         'method':request.method,
-        'moisture':f,
+        'moisture':m["moisture"],
         'state':obj2.order
         }
         return JsonResponse(response)
