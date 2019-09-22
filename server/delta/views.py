@@ -1,24 +1,33 @@
 import django
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 import json
 from django.http import JsonResponse
 from delta.models import status,led
+from .forms import nodemcu
 from django.db import connection
+from django.views.decorators.csrf import csrf_protect
 def node(request):
     response={'moisture':678
     }
     return JsonResponse(response)
-def show(request,f):
-    obj= status.objects.get(id=5)
-    obj.moisture=f
+    #queryset = led.objects.all()
+def show(request):
+    ##form=nodemcu(request.POST or None)
+    obj=get_object_or_404(status, id=5)
+    ##if form.is_valid():
+    ##    form.save()
+    #obj= status.objects.get(id=5)
+    obj.moisture=request.POST.get("moisture",1000)
+    ##obj.moisture=json.loads(receiveddata)
     obj.save()
-    obj2=led.objects.get(id=1)
-    m=json.loads(f)
+    obj2=get_object_or_404(led,id=1)
+    ##m=json.loads(f)
+    #id_ = self.kwargs.get("id")
     if request.method =='POST':
         response={
         'method':request.method,
-        'moisture':m["moisture"],
+        'moisture':obj.moisture,
         'state':obj2.order
         }
         return JsonResponse(response)
@@ -29,7 +38,6 @@ def show(request,f):
         'state':obj2.order
         }
         return JsonResponse(response)
-    return HttpResponse("the name is {}".format(f))
 
 ##    response={
 ##    'abas':f,
@@ -50,6 +58,7 @@ def off(request):
     obj= led.objects.get(id=1)
     obj.order='off'
     obj.position='off'
+    #obj.slug='on to off'
     obj.save( )
 #    post=led.objects.create(order='off',position='off')
 #    post.save()
@@ -62,6 +71,7 @@ def on(request):
     obj= led.objects.get(id=1)
     obj.order='on'
     obj.position='on'
+    #obj.slug='off to on'
     obj.save()
     content={
     'order': obj.order ,
