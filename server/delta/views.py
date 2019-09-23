@@ -18,8 +18,10 @@ def show(request):
     ##if form.is_valid():
     ##    form.save()
     #obj= status.objects.get(id=5)
-    obj.moisture=request.POST.get("moisture",1000)
+    ##x=len(request.POST)
+    mydata=json.loads(request.body.decode('utf-8'))
     ##obj.moisture=json.loads(receiveddata)
+    obj.moisture=mydata["moisture"]
     obj.save()
     obj2=get_object_or_404(led,id=1)
     ##m=json.loads(f)
