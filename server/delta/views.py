@@ -1,10 +1,10 @@
 import django
 from django.shortcuts import render,get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 import json
 from django.http import JsonResponse
 from delta.models import status,led
-from .forms import nodemcu
 from django.db import connection
 from django.views.decorators.csrf import csrf_protect
 def node(request):
@@ -48,14 +48,15 @@ def show(request):
     ##return JsonResponse(response)
     ##if request.headers['connection'] =='close':
         ##connection.close()
+@login_required
 def function(request):
     obj= status.objects.get(id=5)
     content={
     'title': obj.title ,
     'state': obj.moisture
     }
-    return render(request,'show.html',content)
-
+    return render(request,'delta/show.html',content)
+@login_required
 def off(request):
     obj= led.objects.get(id=1)
     obj.order='off'
@@ -68,7 +69,8 @@ def off(request):
     'order': obj.order ,
     'position': obj.position
     }
-    return render(request,'base.html',content)
+    return render(request,'delta/base.html',content)
+@login_required
 def on(request):
     obj= led.objects.get(id=1)
     obj.order='on'
@@ -79,7 +81,7 @@ def on(request):
     'order': obj.order ,
     'position': obj.position
     }
-    return render(request,'base.html',content)
+    return render(request,'delta/base.html',content)
 def homepage(request):
 #    person= {'firstname': 'farzin', 'lastname': 'Daniels'}
 #    weather= "sunny"
@@ -87,4 +89,5 @@ def homepage(request):
 #        'person': person,
 #        'weather': weather,
 #        }
-    return render(request,'base.html')
+
+    return render(request,'delta/base.html')

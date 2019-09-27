@@ -12,13 +12,22 @@
   <body>
 
     <h1>welcome!!!</h1>
+    <p><a href="{% url 'login'%}"> login</a>
+    <a href="{% url 'logout'%}"> logout</a>
+    <a href="{% url 'register'%}"> register</a></p>
+    {% if user.is_authenticated %}
+      <p>Hi {{ user.username }}!</p>
+    {% else %}
+      <p>You are not logged in for enabling change and manage your stracture please login first</p>
+    {% endif %}
+
     {%block content %}
 
     {%endblock content%}
     <p>GPIO state: {{position}} </p>
-    <p><a href="{%url 'off'%}"><button class="button">OFF</button></a></p>
-    <p><a href="{%url 'on'%}"><button class="button button2">ON</button></a></p>
-    <p><a href="{%url 'function'%}"><button class="button button3">soil moisture</button></a></p>
+    <p><a href="{%url 'delta:off'%}"><button class="button">OFF</button></a></p>
+    <p><a href="{%url 'delta:on'%}"><button class="button button2">ON</button></a></p>
+    <p><a href="{%url 'delta:function'%}"><button class="button button3">soil moisture</button></a></p>
     <p> iot api </p>
     <form action="http://google.com">
     <input type="submit" value="Go to Google" />

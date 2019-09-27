@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
-
+from main.views import login_view, register_view, logout_view
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', include('delta.urls')),
+    path('accounts/login/', login_view , name="login"),
+    path('accounts/register/', register_view , name="register"),
+    path('accounts/logout/', logout_view , name="logout"),
 ]
