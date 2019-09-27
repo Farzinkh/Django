@@ -51,9 +51,11 @@ def show(request):
 @login_required
 def function(request):
     obj= status.objects.get(id=5)
+    obj2= led.objects.get(id=1)
     content={
     'title': obj.title ,
-    'state': obj.moisture
+    'state': obj.moisture,
+    'position': obj2.position
     }
     return render(request,'delta/show.html',content)
 @login_required
@@ -61,27 +63,33 @@ def off(request):
     obj= led.objects.get(id=1)
     obj.order='off'
     obj.position='off'
+    obj2= status.objects.get(id=5)
     #obj.slug='on to off'
     obj.save( )
 #    post=led.objects.create(order='off',position='off')
 #    post.save()
     content={
     'order': obj.order ,
-    'position': obj.position
+    'position': obj.position,
+    'title': obj2.title ,
+    'state': obj2.moisture
     }
-    return render(request,'delta/base.html',content)
+    return render(request,'delta/show.html',content)
 @login_required
 def on(request):
     obj= led.objects.get(id=1)
     obj.order='on'
     obj.position='on'
+    obj2= status.objects.get(id=5)
     #obj.slug='off to on'
     obj.save()
     content={
     'order': obj.order ,
-    'position': obj.position
+    'position': obj.position,
+    'title': obj2.title ,
+    'state': obj2.moisture
     }
-    return render(request,'delta/base.html',content)
+    return render(request,'delta/show.html',content)
 def homepage(request):
 #    person= {'firstname': 'farzin', 'lastname': 'Daniels'}
 #    weather= "sunny"
