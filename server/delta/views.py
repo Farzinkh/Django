@@ -22,6 +22,7 @@ def show(request):
     mydata=json.loads(request.body.decode('utf-8'))
     ##obj.moisture=json.loads(receiveddata)
     obj.moisture=mydata["moisture"]
+    obj.title=mydata["state"]
     obj.save()
     obj2=get_object_or_404(led,id=1)
     ##m=json.loads(f)

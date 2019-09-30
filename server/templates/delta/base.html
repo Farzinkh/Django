@@ -6,9 +6,10 @@
     <meta charset="utf-8">
     <title>THE FLOW</title>
     <style>html{font-family: Helvetica; display:inline-block; margin: 0px auto; text-align: center;}
-  h1{color: #0F3376; padding: 2vh;}p{font-size: 1.5rem;}.button{display: inline-block; background-color: #E82B25; border: none;
+  h1{color: #0F3376; padding: 2vh;}p{font-size: 1.5rem;}.button{display: inline-block;background-color: #E82B25; border: none;
   border-radius: 4px; color: white; padding: 16px 40px; text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}
-  .button2{background-color: #e7bd3b;}.button3{background-color: #a61263;}.italic {font-style: italic;}</style>
+  .button2{background-color: #e7bd3b;}.button3 {background-color: #a61263;}.italic {font-style: italic;}
+</style>
   </head>
   <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -32,9 +33,19 @@
     {%endblock content%}
     {% if user.is_authenticated %}
     <p>GPIO state: {{position}} </p>
-    <p><a href="{%url 'delta:on'%}"><button class="button button2">ON</button></a></p>
-    <p><a href="{%url 'delta:off'%}"><button class="button">OFF</button></a></p>
-    <p><a href="{%url 'delta:function'%}"><button class="button button3">soil moisture</button></a></p>
+    <p class="italic"><a href="{%url 'delta:on'%}"><button onclick="alert('You turned off flowerpot')" class="button button2">ON</button></a></p>
+    <p class="italic"><a href="{%url 'delta:off'%}"><button onclick="alert('You turned on flowerpot')" class="button">OFF</button></a></p>
+    <p class="italic"><a href="{%url 'delta:function'%}"><button class="button button3">soil moisture</button></a></P>
+    <a><select id="groups" name="groups">
+      <optgroup label="state">
+        <option>damp</option>
+        <option selected>waterlogged</option>
+        <option>dranch</option>
+        <option>dry</option>
+        </optgroup>
+    </select></a>
+    <input type="submit" value="submit">
+
     {% endif %}
   </body>
 </html>

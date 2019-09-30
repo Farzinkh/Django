@@ -6,10 +6,7 @@ from django.contrib.auth import (
     login,
     logout
 )
-
 from .forms import UserLoginForm, UserRegisterForm
-
-
 def login_view(request):
     next = request.GET.get('next')
     form = UserLoginForm(request.POST or None)

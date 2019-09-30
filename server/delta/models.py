@@ -13,4 +13,3 @@ class led(models.Model) :
         return '%s %s' % (self.order, self.position)
     def get_absolute_url(self):
         return reverse('show', kwargs={"id": self.id})
-# Create your models here.
